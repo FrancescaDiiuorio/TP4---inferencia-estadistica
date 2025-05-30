@@ -1,0 +1,133 @@
+---
+title: "Cerdeira_Diiuorio_TP4"
+output: pdf_document
+date: "2025-05-28"
+
+---
+
+```{r, echo = FALSE}
+set.seed(1234)
+datos_historicos = read.csv("datos_historicos.csv")$play.delay
+datos_nueva_version = read.csv("datos_nueva_version.csv")$play.delay
+
+```
+
+### Ejercicio 1
+### (a)
+
+```{r, echo = FALSE}
+media_muestral <- round(mean(datos_historicos),2)
+var_muestral <- round(var(datos_historicos),2)
+
+``` 
+
+* La media muestral es `r media_muestral`.
+
+* La varianza muestral es `r var_muestral`.
+
+### (b)
+
+``` {r, echo = FALSE}
+hist(datos_historicos, prob = TRUE, col = "lightblue", main = "Histograma de densidad de datos historicos")
+curve(dnorm(x, mean = media_muestral, sd = sqrt(var_muestral)), lwd = 2, lty = 2, add = TRUE, col = "darkred")
+
+```
+
+### Ejercicio 2
+
+
+
+Primero definimos:
+
+
+* \(\mu_0 \) = media del "play-delay" de la versión anterior = 41.9847 
+
+* \(\sigma_0^2\) = varianza del "play-delay" de la versión anterior = 52.4325
+
+
+
+
+Ahora definimos:
+
+$$ X_i = \text{El "play-delay" del i-ésimo usuario evaluado con la nueva versión. }\space 1\leq i\leq 200  $$
+
+
+
+Y contamos con la siguiente distribución de nuestra muestra:
+
+$$ \space X_1, ..., X_{200} \sim \mathcal{N}(\mu, {52.43}) \text{ iid} $$
+
+Donde:
+
+$$ \mu = \text{media del ``play-delay'' }   $$
+
+```{r, echo = FALSE}
+
+mu_estimado = round(mean(datos_nueva_version),2)
+
+```
+
+
+La estimación de \(\mu\) es:  
+
+$$ \hat{\mu} = \overline{X} = 42.99 \\$$
+
+### Ejercicio 3
+
+### (a) 
+
+
+
+Proponemos las siguientes Hipótesis Nula e Hipótesis Alternativa
+
+
+
+$$ H_0: \mu \leq \mu_0\quad vs.\quad H_1: \mu > \mu_0\quad $$ 
+
+
+Es decir,
+$$ H_0: \mu \leq 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 $$
+
+
+Para simplificar el problema, suponemos:
+$$ H_0: \mu = 41.98  $$
+
+
+Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.9847, entonces si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
+
+$$ \mu \leq 41.98 $$
+
+
+Por lo tanto, las hipótesis quedarían así:
+
+
+$$ H_0: \mu = 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\ $$
+
+**Estadístico:** 
+
+
+Para hallar el estadístico partimos del estimador de \(\mu\):  
+
+$$ \hat{\mu} = \overline{X} $$
+$$ \text{Asumimos distribución de } \overline{X} \text{ bajo } H_0 $$
+$$ \overline{X} \sim \mathcal{N}(41.98, \frac{52.43}{200}) \space \text{bajo } H_0 $$
+
+Lo estandarizamos
+
+$$T=\frac{\bar{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0$$
+
+T es nuestro estadístico. Nos sirve porque es una función de la muestra aleatoria y tiene distribución conocida bajo \(H_0\). 
+
+### (b)
+
+$$ \alpha = 0.05 $$
+
+
+
+$$ \text{Vamos a rechazar } H_0 \text{ cuando } \overline{X} > C \text{ donde } C \text{ es un número tal que:} $$
+$$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  $$
+$$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) $$
+
+
+
+
