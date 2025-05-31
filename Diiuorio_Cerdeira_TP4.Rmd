@@ -114,7 +114,7 @@ $$ \overline{X} \sim \mathcal{N}(41.98, \frac{52.43}{200}) \space \text{bajo } H
 
 Lo estandarizamos
 
-$$T=\frac{\bar{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0$$
+$$T=\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0$$
 
 T es nuestro estadístico. Nos sirve porque es una función de la muestra aleatoria y tiene distribución conocida bajo \(H_0\). 
 
@@ -128,6 +128,87 @@ $$ \text{Vamos a rechazar } H_0 \text{ cuando } \overline{X} > C \text{ donde } 
 $$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  $$
 $$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) $$
 
+$$ P(\overline{X}>C|H_0 \text{ es V}) = {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })}$$
 
 
 
+$$ como \quad \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}}  \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0 $$
+
+Entonces lo llamamos Z ya que 
+
+$$ Z \sim \mathcal{N}(0, 1) $$
+
+Por lo tanto, 
+
+
+$$ {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })} = P(Z > q) $$
+
+donde 
+
+$$ q = \space \frac{C-41.98}{\sqrt{52.43 / 200}}  $$
+
+
+Propongo rechazar cuando mi 
+
+$$  T = \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > q $$
+
+
+$$ \text{Queremos }  q \space / P(Z > q) = \alpha = 0.05 $$
+
+``` {r}
+alpha <- 0.05
+q <- qnorm(1-alpha, mean = 0, sd = 1)
+```
+
+```{r, echo = FALSE}
+media <- 0
+desvio <- 1
+x <- seq(-4, 4, length = 1000)
+y <- dnorm(x, mean = media, sd = desvio)
+
+# Graficamos la curva normal
+plot(x, y, type = "l", lwd = 2, col = "blue",
+     xlab = "N(0,1)", ylab = "", 
+     main = paste("Área =", alpha, "a derecha de q"))
+
+# Sombrear el área correspondiente
+x_somb <- seq( q, 4, length = 1000)
+y_somb <- dnorm(x_somb, mean = media, sd = desvio)
+
+polygon(c(x_somb, rev(x_somb)), 
+        c(y_somb, rep(0, length(y_somb))), 
+        col = rgb(1, 0, 0, 0.3), border = NA)
+
+# Línea vertical en q
+abline(v = q, col = "red", lwd = 2, lty = 2)
+text(q, dnorm(q), labels = sprintf("q"), pos = 4, col = "red")
+
+```
+
+
+
+
+
+Entonces, q es un cuantil tal que me deja área \(\alpha\) = 0.05 a derecha o área 1 - \(\alpha\) = 0.95 a izquierda .
+
+
+
+$$ \text{Por lo tanto } q = Z_{\alpha} = Z_{0.05} $$
+
+
+Nuestra Región de Rechazo quedaría 
+
+$$ R = \{ T > Z_{0.05}\} $$
+
+Por la tabla de una Normal Estándar, podemos ver que 
+
+
+$$ q = Z_{\alpha} = 1.64 $$
+
+
+
+Como resultado, la Región de Rechazo para este test es:
+
+
+
+$$ R = \{ T > 1.64\} $$
