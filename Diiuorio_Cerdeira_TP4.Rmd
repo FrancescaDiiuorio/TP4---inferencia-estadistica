@@ -212,3 +212,42 @@ Como resultado, la Región de Rechazo para este test es:
 
 
 $$ R = \{ T > 1.64\} $$
+
+
+### Ejercicio 4
+
+### (a)
+
+
+Para utilizar el test construido debemos como primer paso calcular el promedio de los valores de la muestra "datos nueva versión". Una vez calculado, evaluamos nuestro estadístico observado. Si este pertenece en la Región de Rechazo, rechazamos \(H_0\). En el caso de no pertenecer a la región, no confirmamos que \(H_0\) sea verdadera sino que no tenemos la suficiente evidencia para rechazarla.  
+
+Como vimos antes:
+
+$$ \hat{\mu} = \overline{X} =  42.99 $$
+Ahora, buscamos al estadístico observado de esta muestra. 
+
+
+$$  T_{obs} = \frac{\overline{X_{obs}}-41.98}{\sqrt{52.43 / 200}} $$
+
+$$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} $$
+
+```{r, echo = FALSE}
+
+Tobs <- round((42.99 - 41.98) / sqrt(52.43/200), 2)
+
+```
+
+Mi estadístico observado es \(T_{obs}\) = `r Tobs`
+
+Como podemos ver, el estadístico observado pertenece a la región de rechazo. Tenemos suficiente evidencia para rechazar \(H_0\) porque `r Tobs` > 1.64
+
+Con esta evidencia rechazamos la actualización ya que aumenta el "play-delay", es decir, la esperanza del "play-delay" con la versión nueva es mayor a la actual, y es por eso que enviamos el código a revisión. 
+
+
+
+
+
+
+
+
+
