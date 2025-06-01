@@ -55,11 +55,11 @@ $$ X_i = \text{El "play-delay" del i-ésimo usuario evaluado con la nueva versi�
 
 Y contamos con la siguiente distribución de nuestra muestra:
 
-$$ \space X_1, ..., X_{200} \sim \mathcal{N}(\mu, {52.43}) \text{ iid} $$
+$$ \space X_1, ..., X_{200} \sim \mathcal{N}(\mu, {52.43}) \text{ iid} \\$$
 
 Donde:
 
-$$ \mu = \text{media del ``play-delay'' }   $$
+$$ \mu = \text{media del ``play-delay'' }   \\$$
 
 ```{r, echo = FALSE}
 
@@ -81,27 +81,25 @@ $$ \hat{\mu} = \overline{X} = 42.99 \\$$
 Proponemos las siguientes Hipótesis Nula e Hipótesis Alternativa
 
 
-
-$$ H_0: \mu \leq \mu_0\quad vs.\quad H_1: \mu > \mu_0\quad $$ 
+$$ H_0: \mu \leq \mu_0\quad vs.\quad H_1: \mu > \mu_0\quad \\$$ 
 
 
 Es decir,
-$$ H_0: \mu \leq 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 $$
+$$ H_0: \mu \leq 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
 
 
 Para simplificar el problema, suponemos:
-$$ H_0: \mu = 41.98  $$
-
+$$ H_0: \mu = 41.98  \\$$
 
 Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.9847, entonces si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
 
-$$ \mu \leq 41.98 $$
+$$ \mu \leq 41.98 \\$$
 
 
 Por lo tanto, las hipótesis quedarían así:
 
 
-$$ H_0: \mu = 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\ $$
+$$ H_0: \mu = 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
 
 **Estadístico:** 
 
@@ -110,50 +108,50 @@ Para hallar el estadístico partimos del estimador de \(\mu\):
 
 $$ \hat{\mu} = \overline{X} $$
 $$ \text{Asumimos distribución de } \overline{X} \text{ bajo } H_0 $$
-$$ \overline{X} \sim \mathcal{N}(41.98, \frac{52.43}{200}) \space \text{bajo } H_0 $$
+$$ \overline{X} \sim \mathcal{N}(41.98, \frac{52.43}{200}) \quad \text{bajo } H_0 \\$$
 
 Lo estandarizamos
 
-$$T=\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0$$
+$$T=\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0 \\$$
 
 T es nuestro estadístico. Nos sirve porque es una función de la muestra aleatoria y tiene distribución conocida bajo \(H_0\). 
 
 ### (b)
 
-$$ \alpha = 0.05 $$
+$$ \alpha = 0.05 \\$$
 
 
 
-$$ \text{Vamos a rechazar } H_0 \text{ cuando } \overline{X} > C \text{ donde } C \text{ es un número tal que:} $$
-$$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  $$
-$$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) $$
+$$ \text{Vamos a rechazar } H_0 \text{ cuando } \overline{X} > C \text{ donde } C \text{ es un número tal que:} \\$$
+$$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  \\$$
+$$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) \\$$
 
-$$ P(\overline{X}>C|H_0 \text{ es V}) = {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })}$$
+$$ P(\overline{X}>C|H_0 \text{ es V}) = {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })} \\$$
 
 
 
-$$ como \quad \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}}  \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0 $$
+$$ como \quad \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}}  \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0 \\$$
 
 Entonces lo llamamos Z ya que 
 
-$$ Z \sim \mathcal{N}(0, 1) $$
+$$ Z \sim \mathcal{N}(0, 1) \\$$
 
 Por lo tanto, 
 
 
-$$ {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })} = P(Z > q) $$
+$$ {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })} = P(Z > q) \\$$
 
 donde 
 
-$$ q = \space \frac{C-41.98}{\sqrt{52.43 / 200}}  $$
+$$ q = \space \frac{C-41.98}{\sqrt{52.43 / 200}}  \\$$
 
 
-Propongo rechazar cuando mi 
+Según la Hipótesis Alternativa, decidimos rechazar \(H_0\) cuando:  
 
-$$  T = \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > q $$
+$$  T = \frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > q \\$$
 
 
-$$ \text{Queremos }  q \space / P(Z > q) = \alpha = 0.05 $$
+$$ \text{Queremos }  q \space / P(Z > q) = \alpha = 0.05 \\$$
 
 ``` {r}
 alpha <- 0.05
@@ -193,25 +191,24 @@ Entonces, q es un cuantil tal que me deja área \(\alpha\) = 0.05 a derecha o á
 
 
 
-$$ \text{Por lo tanto } q = Z_{\alpha} = Z_{0.05} $$
+$$ \text{Por lo tanto } q = Z_{\alpha} = Z_{0.05} \\$$
 
 
 Nuestra Región de Rechazo quedaría 
 
-$$ R = \{ T > Z_{0.05}\} $$
+$$ R = \{ T > Z_{0.05}\} \\$$
 
 Por la tabla de una Normal Estándar, podemos ver que 
 
 
-$$ q = Z_{\alpha} = 1.64 $$
+$$ q = Z_{0.05} = 1.64 \\$$
 
 
 
 Como resultado, la Región de Rechazo para este test es:
 
 
-
-$$ R = \{ T > 1.64\} $$
+$$ R = \{ T > 1.64\} \\$$
 
 
 ### Ejercicio 4
@@ -223,13 +220,12 @@ Para utilizar el test construido debemos como primer paso calcular el promedio d
 
 Como vimos antes:
 
-$$ \hat{\mu} = \overline{X} =  42.99 $$
+$$ \hat{\mu} = \overline{X} =  42.99 \\$$
 Ahora, buscamos al estadístico observado de esta muestra. 
 
+$$  T_{obs} = \frac{\overline{X_{obs}}-41.98}{\sqrt{52.43 / 200}} \\$$
 
-$$  T_{obs} = \frac{\overline{X_{obs}}-41.98}{\sqrt{52.43 / 200}} $$
-
-$$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} $$
+$$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} \\$$
 
 ```{r, echo = FALSE}
 
@@ -243,6 +239,41 @@ Como podemos ver, el estadístico observado pertenece a la región de rechazo. T
 
 Con esta evidencia rechazamos la actualización ya que aumenta el "play-delay", es decir, la esperanza del "play-delay" con la versión nueva es mayor a la actual, y es por eso que enviamos el código a revisión. 
 
+
+### (b)
+
+```{r, echo = FALSE}
+
+alpha_1 <- 0.01
+alpha_2 <- 0.1
+
+q1 <- qnorm(1 - alpha_1, mean = 0, sd = 1)
+q2 <- qnorm(1 - alpha_2, mean = 0, sd = 1)
+
+q1
+q2
+
+```
+
+$$ \text{Si }\space \alpha = 0.01 \\$$
+$$ P(EI) = P(\text{Rechazar } H_0 | H_0 \text{ es V}) = 0.01 \\$$
+
+La Región de Rechazo con \(\alpha\) = 0.01 será:
+
+$$ R = \{T > Z_{\alpha}\} = \{T > Z_{0.01}\} = \{T > 2.33\}  \\$$
+El cuantil \(Z_{0.01}\) deja menos área a la derecha que el cuantil \(Z_{0.05}\). Esto implica que el primero está gráficamente a derecha del segundo (\(Z_{0.05}\) < \(Z_{0.01}\)).  
+
+$$ \text{Si }\space \alpha = 0.1 \\$$
+
+$$ P(EI) = P(\text{Rechazar } H_0 | H_0 \text{ es V}) = 0.1 \\$$
+La Región de Rechazo con \(\alpha\) = 0.1 será:
+
+$$ R = \{T > Z_{\alpha}\} = \{T > Z_{0.1}\} = \{T > 1.28\} \\$$
+
+El cuantil \(Z_{0.1}\) deja más área a la derecha que el cuantil \(Z_{0.05}\). Esto implica que el primero está gráficamente a izquierda del segundo (\(Z_{0.1}\) < \(Z_{0.05}\)).  
+
+
+El \(\alpha\) desplaza el punto de corte para la Región de Rechazo. A mayor \(\alpha\), menor es el punto de corte del cual arranca la Región de Rechazo. Aplicado a este test, a mayor \(\alpha\), mando más seguido actualizaciones a auditar, ya que el estadístico observado puede ser menor para rechazar \(H_0\) y decir que el "play-delay" de la nueva versión es mayor al actual. 
 
 
 
