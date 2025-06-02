@@ -12,7 +12,7 @@ datos_nueva_version = read.csv("datos_nueva_version.csv")$play.delay
 
 ```
 
-### Ejercicio 1
+## Ejercicio 1
 ### (a)
 
 ```{r, echo = FALSE}
@@ -21,19 +21,21 @@ var_muestral <- round(var(datos_historicos),2)
 
 ``` 
 
-* La media muestral es `r media_muestral`.
+La **media muestral** de los datos historicos es **`r media_muestral`**.
 
-* La varianza muestral es `r var_muestral`.
+La **varianza muestral** de los datos historicos es **`r var_muestral`**.
 
 ### (b)
 
 ``` {r, echo = FALSE}
-hist(datos_historicos, prob = TRUE, col = "lightblue", main = "Histograma de densidad de datos historicos")
+hist(datos_historicos, prob = TRUE, breaks=30 ,col = "lightblue", main = "Histograma de densidad de datos historicos")
 curve(dnorm(x, mean = media_muestral, sd = sqrt(var_muestral)), lwd = 2, lty = 2, add = TRUE, col = "darkred")
 
 ```
 
-### Ejercicio 2
+Los datos parecen distribuirse de forma normal.
+
+## Ejercicio 2
 
 
 
@@ -68,11 +70,13 @@ mu_estimado = round(mean(datos_nueva_version),2)
 ```
 
 
+Para estimar \(\mu\) vamos calcular la **media muestral** de la muestra con los 200 nuevos usuarios.
+
 La estimación de \(\mu\) es:  
 
 $$ \hat{\mu} = \overline{X} = 42.99 \\$$
 
-### Ejercicio 3
+## Ejercicio 3
 
 ### (a) 
 
@@ -91,12 +95,12 @@ $$ H_0: \mu \leq 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
 Para simplificar el problema, suponemos:
 $$ H_0: \mu = 41.98  \\$$
 
-Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.9847, entonces si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
+Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.9847. Por lo tanto, si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
 
 $$ \mu \leq 41.98 \\$$
 
 
-Por lo tanto, las hipótesis quedarían así:
+Por ende, las hipótesis quedarían así:
 
 
 $$ H_0: \mu = 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
@@ -107,10 +111,11 @@ $$ H_0: \mu = 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
 Para hallar el estadístico partimos del estimador de \(\mu\):  
 
 $$ \hat{\mu} = \overline{X} $$
-$$ \text{Asumimos distribución de } \overline{X} \text{ bajo } H_0 $$
+Asumimos distribución de  \(\overline{X}\) bajo  \(H_{0}\):
+
 $$ \overline{X} \sim \mathcal{N}(41.98, \frac{52.43}{200}) \quad \text{bajo } H_0 \\$$
 
-Lo estandarizamos
+Lo estandarizamos:
 
 $$T=\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \text{bajo } H_0 \\$$
 
@@ -122,7 +127,7 @@ $$ \alpha = 0.05 \\$$
 
 
 
-$$ \text{Vamos a rechazar } H_0 \text{ cuando } \overline{X} > C \text{ donde } C \text{ es un número tal que:} \\$$
+Vamos a rechazar \(H_{0}\) cuando \(\overline{X}>C\) donde C es un número tal que:
 $$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  \\$$
 $$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) \\$$
 
@@ -211,12 +216,12 @@ Como resultado, la Región de Rechazo para este test es:
 $$ R = \{ T > 1.64\} \\$$
 
 
-### Ejercicio 4
+## Ejercicio 4
 
 ### (a)
 
 
-Para utilizar el test construido debemos como primer paso calcular el promedio de los valores de la muestra "datos nueva versión". Una vez calculado, evaluamos nuestro estadístico observado. Si este pertenece en la Región de Rechazo, rechazamos \(H_0\). En el caso de no pertenecer a la región, no confirmamos que \(H_0\) sea verdadera sino que no tenemos la suficiente evidencia para rechazarla.  
+Para utilizar el test construido, el primer paso es calcular el promedio de los valores de la muestra "datos nueva versión". Una vez calculado, evaluamos nuestro estadístico observado. Si este pertenece en la Región de Rechazo, rechazamos \(H_0\). En el caso de no pertenecer a la región, no confirmamos que \(H_0\) sea verdadera sino que no tenemos la suficiente evidencia para rechazarla.  
 
 Como vimos antes:
 
@@ -225,7 +230,7 @@ Ahora, buscamos al estadístico observado de esta muestra.
 
 $$  T_{obs} = \frac{\overline{X_{obs}}-41.98}{\sqrt{52.43 / 200}} \\$$
 
-$$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} \\$$
+$$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} = 1.97\\$$
 
 ```{r, echo = FALSE}
 
@@ -250,12 +255,12 @@ alpha_2 <- 0.1
 q1 <- qnorm(1 - alpha_1, mean = 0, sd = 1)
 q2 <- qnorm(1 - alpha_2, mean = 0, sd = 1)
 
-q1
-q2
 
 ```
 
-$$ \text{Si }\space \alpha = 0.01 \\$$
+#### \(\alpha\)=0.01
+
+
 $$ P(EI) = P(\text{Rechazar } H_0 | H_0 \text{ es V}) = 0.01 \\$$
 
 La Región de Rechazo con \(\alpha\) = 0.01 será:
@@ -263,7 +268,8 @@ La Región de Rechazo con \(\alpha\) = 0.01 será:
 $$ R = \{T > Z_{\alpha}\} = \{T > Z_{0.01}\} = \{T > 2.33\}  \\$$
 El cuantil \(Z_{0.01}\) deja menos área a la derecha que el cuantil \(Z_{0.05}\). Esto implica que el primero está gráficamente a derecha del segundo (\(Z_{0.05}\) < \(Z_{0.01}\)).  
 
-$$ \text{Si }\space \alpha = 0.1 \\$$
+
+#### \(\alpha\)=0.1
 
 $$ P(EI) = P(\text{Rechazar } H_0 | H_0 \text{ es V}) = 0.1 \\$$
 La Región de Rechazo con \(\alpha\) = 0.1 será:
@@ -277,8 +283,69 @@ El \(\alpha\) desplaza el punto de corte para la Región de Rechazo. A mayor \(\
 
 
 
+### (C)
 
+```{r, echo= FALSE}
 
+alfas <- seq(0.01, 0.10, by = 0.01)
 
+z_crit  <- numeric(length(alfas))   # un vector numérico vacío de la misma longitud que 'alfas'
+decision <- character(length(alfas)) # un vector de texto (caracteres) vacío
+
+for(i in 1:length(alfas)){
+  
+  z_crit[i] <- qnorm(1-alfas[i])
+  
+  if(Tobs >= z_crit[i]){
+    decision[i] <- "Rechazo H0"
+  } else {
+    decision[i] <- "No Rechazo H0"
+  }
+}
+
+# Armo un data.frame con las tres columnas
+tabla <- data.frame(
+  alpha    = alfas,
+  z_crit   = round(z_crit, 3),  # redondeo a 3 decimales para que quede prolijo
+  decision = decision
+)
+
+print(tabla)
+
+```
+
+```{r, echo = FALSE}
+# plot vacío con ejes y densidad
+plot(NA, xlim = c(-4, 4), ylim = c(0, dnorm(0)), 
+     xlab = "Valor de Z", ylab = "Densidad", 
+     main = "Normal Estándar con cortes y T_obs")
+
+# dibujo la curva de la Normal estándar
+curve(dnorm(x), from = -4, to = 4, add = TRUE, 
+      col = "orange", lwd = 2)
+
+# --------------------------------------------
+# 3) Agrego líneas punteadas para cada z_crítico
+# --------------------------------------------
+for (zc in z_crit) {
+  abline(v = zc, lty = 2, col = "orange", lwd = 1)
+}
+
+# --------------------------------------------
+# 4) Agrego la línea gruesa para z_obs
+# --------------------------------------------
+abline(v = Tobs, col = "black", lwd = 2)
+
+# --------------------------------------------
+# 5) Agrego leyenda para aclarar
+# --------------------------------------------
+legend("topright", 
+       legend = c("Normal Estándar", 
+                  paste0("T-obs = ", round(Tobs, 3))),
+       col    = c("orange", "black"),
+       lty    = c(1, 1),
+       lwd    = c(2, 2),
+       bty    = "n")
+```
 
 
