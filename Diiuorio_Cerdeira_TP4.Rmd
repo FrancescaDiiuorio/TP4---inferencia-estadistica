@@ -18,7 +18,7 @@ datos_nueva_version = read.csv("datos_nueva_version.csv")$play.delay
 ```{r, echo = FALSE}
 media_muestral <- round(mean(datos_historicos),2)
 var_muestral <- round(var(datos_historicos),2)
-
+sd0 <- round(sd(datos_historicos),2)
 ``` 
 
 La **media muestral** de los datos historicos es **`r media_muestral`**.
@@ -489,7 +489,7 @@ legend(
 )
 ```
 
-Es muy importante notar que el área sombreada es el p-valor. Esto tiene sentido sí recordamos que el p-valor es la "probabilidad de observar valores iguales o más extremos a lo observado". Graficamente, el p-valor es el área a derecha del T-obs (en éste caso dónde \(H_{1}: \mu > \mu_{0}\)), en otros casos podria ser el área a la izquierda, o el área en ambos extremos).
+Es muy importante notar que el área sombreada es el p-valor. Esto tiene sentido sí recordamos que el p-valor es la "probabilidad de observar valores iguales o más extremos a lo observados (en direccion a \(H_{1}\)), asumiendo que \(H_{0}\) es verdadera". Graficamente, el p-valor es el área a derecha del T-obs (en éste caso dónde \(H_{1}: \mu > \mu_{0}\)), en otros casos podria ser el área a la izquierda, o el área en ambos extremos).
 
 Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor es el nivel de significancia \(\alpha\) minimo, para el cuál puedo rechazar \(H_{0}\) con los datos observados".
 
@@ -497,12 +497,174 @@ Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor e
 
 ### (A)
 
+En este ejercicio vamos a **simular** una muestra de tamaño \(n = 200\) asumiendo que la hipótesis nula \(H_{0}: \mu = \mu_{0}\) es verdadera, es decir, que la nueva versión **no** modificó la media de Play‐Delay con respecto a los datos históricos. 
+
+Los datos de nuestra muestra tendran la siguiente distribucion:
+
+$$ X_{1},...,X_{200} \sim N(41.98, 52.48)$$
+Simulamos la muestra en R:
+```{r}
+set.seed(1234)
+muestra_sim <- rnorm(200, mean=media_muestral, sd= sd0)
+```
+
+Calculamos la media muestral:
+```{r}
+xbar_sim = mean(muestra_sim)
+print(xbar_sim)
+```
+
+$$\overline{X}=41.56$$
+Calculamos el T-Observado:
+```{r}
+Tobs_sim <- (xbar_sim - media_muestral) / (sd0/sqrt(200))
+print(Tobs_sim)
+```
+
+
+$$ T = \frac{41.56-41.98}{\sqrt{52.43/200}}=-0.81$$
+
+En el punto 3.b vimos que la región de rechazo para éste test con un nivel \(\alpha = 0.05\) es:
+$$R=\{T>1.64\}$$
+
+Entonces, cómo el T-observado **(-0.81)** es menor que 1.64, **NO tenemos evidencia suficiente para rechazar \(H_{0}\)** con los datos observados.
+
+Esta es la decisión correcta ya que estamos asumiendo que \(H_{0}\) es verdadera. Si, por casualidad, el T-Observado hubiera sido mayor que 1.64, habriamos cometido un **Error de Tipo 1** al rechazar \(H_{0}\).
+
+
+### (B)
+
+Ahora vamos a repetir el procedimiento anterior **10000 veces**. Vamos a calcular la proporcion de veces que no rechazo \(H_{0}\) y la proporcion de veces que sí lo rechazo (proporcion de veces que cometo un Error de Tipo 1).
+
+Como el test que estamos usando tiene un nivel \(\alpha = 0.05\), esperamos equivocarnos (rechazar \(H_{0}\)) sólo el **5%** de las veces y acertar el **95%** de las veces.
+
+Armamos la simulacion con R e imprimimos los resultados:
 ```{r, echo = FALSE}
 
-sd = sd(datos_historicos)
+set.seed(1234)
 
-muestra_sim = rnorm(200, mean = media_muestral, sd = sd)
+R <- 10000
+rejections <- numeric(R)  # vector para guardar 1 si rechazo, 0 si no rechazo
+z_alpha <- qnorm(1 - 0.05) 
 
+for (i in 1:R) {
+  # 1) Simulo n=200 observaciones bajo H0
+  muestra_i <- rnorm(200, mean = media_muestral, sd = sd0 )
+  
+  # 2) Calculo Z
+  xbar_i <- mean(muestra_i)
+  Z_i    <- (xbar_i - media_muestral) / (sd0 / sqrt(200))
+  
+  # 3) Registro si rechazo (1) o no rechazo ()
+  rejections[i] <- as.numeric(Z_i > z_alpha)
+}
+
+# Proporción de rechazos (error tipo I empírico) 
+porc_rechazo_emp <- mean(rejections) * 100    # en %
+porc_no_rechazo  <- 100 - porc_rechazo_emp    # proporción de decisión correcta, en %
+
+cat("De", R, "simulaciones:\n")
+cat("  • Porcentaje de veces que RECHAZO H0:", round(porc_rechazo_emp, 2), "%\n")
+cat("  • Porcentaje de veces que NO RECHAZO H0:", round(porc_no_rechazo, 2), "%\n")
 ```
+
+
+Vemos que los resultados que obtuvimos son lo que esperabamos: nos equivocamos casi un 5% porciento de las veces y acertamos el 95% de las veces.
+
+### (C)
+
+El nivel de significancia \(\alpha\) es la probabilidad de cometer un Error de Tipo 1. Es decir, \(\alpha\) se define como:
+
+$$\alpha=P(\text{Rechazar }H_{0} \space | \space H_0 \text{ Verdadera})$$
+Al construir un test de hipótesis, uno de los pasos fundamentales es establecer un nivel de significancia \(\alpha\), que debe elegirse en función del contexto del problema. Este nivel representa la probabilidad máxima tolerada de cometer un Error de Tipo 1, es decir, de rechazar la hipótesis nula \(H_0\) cuando en realidad es verdadera. Un valor de \(\alpha\) más bajo implica que somos más conservadores: disminuye la chance de falsos positivos, pero al mismo tiempo aumenta la dificultad para rechazar \(H_0\), lo cual puede reducir el poder del test.
+
+En nuestro caso particular, estamos asumiendo que \(H_0\) es verdadera: es decir, la nueva versión de la plataforma no modificó el valor promedio del Play‐Delay. Por lo tanto, si el test rechaza \(H_0\) bajo esta suposición, estaríamos cometiendo un Error de Tipo 1.
+
+El test que usamos fue diseñado con un nivel de significancia \(\alpha\) = 0.05, lo cual significa que, en promedio, esperamos que el 5% de los tests conduzcan a un rechazo incorrecto de \(H_0\) cuando esta es cierta (que es lo que observamos en el punto anterior).
+
+
+## Ejercicio 6
+
+### (A)
+
+Si asumimos que \(H_{0}\) es verdadera, podemos calcular la probabilidad de observar un resultado cómo el observado o más extremo midiendo el área a la derecha del T-observado.
+
+```{r, echo = FALSE}
+# ——————————————————————————————————————————
+# 1) Defino valores esenciales
+# ——————————————————————————————————————————
+
+# Valor crítico z (por ej. 1.96)
+z_crit3 <- 1.96
+
+# Supongamos que Tobs coincide con z_crit (si no, pon tu valor real)
+Tobs <- 1.96
+
+# Calculo la densidad en esos puntos, para cortar la línea justo en la curva
+y_z   <- dnorm(z_crit3)
+y_obs <- dnorm(Tobs)
+
+# ——————————————————————————————————————————
+# 2) Creo el plot vacío y dibujo la curva Normal Estándar
+# ——————————————————————————————————————————
+plot(
+  NA,
+  xlim  = c(-4, 4),
+  ylim  = c(0, dnorm(0)),
+  xlab  = "Valor de Z",
+  ylab  = "Densidad",
+  main  = "Normal Estándar con Cortes y T_obs"
+)
+
+# Agrego la curva de la Normal estándar
+curve(dnorm(x), from = -4, to = 4, add = TRUE, col = "orange", lwd = 2)
+
+
+# 3.1) Genero secuencia desde z_crit hasta el tope superior (4)
+xs <- seq(z_crit3, 4, length.out = 200)
+ys <- dnorm(xs)
+
+# 3.2) Dibujo el polígono que cubre esa región
+polygon(
+  x   = c(z_crit3, xs, 4),
+  y   = c(0, ys, 0),
+  col = "lightgray",
+  border = NA
+)
+
+# 4.2) Línea negra gruesa (T_obs), le sumo 0.015 para que se vea al lado
+segments(
+  x0 = Tobs + 0.015, y0 = 0,
+  x1 = Tobs + 0.015, y1 = y_obs,
+  col = "black",
+  lwd = 2
+)
+
+legend(
+  "topleft",
+  legend = c(
+    "Normal Estándar",
+    paste0("T_obs = ", round(Tobs, 3))
+  ),
+  col  = c("orange", "black"),
+  lty  = c(1, 2, 1),
+  lwd  = c(2, 2, 2),
+  bty  = "n"
+)
+```
+
+```{r}
+p_valor <- 1 - pnorm(1.96)
+print(p_valor)
+```
+
+$$\text{p-valor} = 0.25$$
+
+### (B)
+
+Vemos que el p-valor que calculamos es el mismo que habiamos obtenido en el punto 4.d. Como explicamos en ése punto, esto se debe a que el p-valor es el minimo nivel de significancia \(\alpha\) para el que rechazamos \(H_{0}\) con los datos observados.
+
+
+
 
 
