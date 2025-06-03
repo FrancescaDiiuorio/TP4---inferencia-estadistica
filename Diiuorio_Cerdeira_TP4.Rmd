@@ -128,8 +128,9 @@ $$ \alpha = 0.05 \\$$
 
 
 Vamos a rechazar \(H_{0}\) cuando \(\overline{X}>C\) donde C es un número tal que:
+
 $$ \quad \alpha = P(EI) = P(\text{Rechazar } H_0 | H_0  \text{ es V}) = P(\overline{X}>C| H_0 \text{ es V})  \\$$
-$$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V}) \\$$
+$$ \implies \text{Queremos C tal que } P(\overline{X}>C|H_0 \text{ es V})=0.05 \\$$
 
 $$ P(\overline{X}>C|H_0 \text{ es V}) = {P(\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} > \frac{C-41.98}{\sqrt{52.43 / 200}} \space| H_0 \text{ es V })} \\$$
 
@@ -285,6 +286,12 @@ El \(\alpha\) desplaza el punto de corte para la Región de Rechazo. A mayor \(\
 
 ### (C)
 
+Para cada alfa, calculamos el Z critico: el punto que marca el comienzo de la región de rechazo.
+
+$$ R=\{T>Z_{\text{crit}}\} $$
+Si el **T observado (1.97)** es mayor al Z critico para un alfa dado, entonces tendremos evidencia suficiente a nivel alfa para rechazar \(H_{0}\).
+
+
 ```{r, echo= FALSE}
 
 alfas <- seq(0.01, 0.10, by = 0.01)
@@ -314,6 +321,10 @@ print(tabla)
 
 ```
 
+Se puede ver que para un **\(\alpha\) igual o mayor a 0.3** ya puedo rechazar \(H_{0}\).
+Es útil ver estos resultados de forma grafica:
+
+
 ```{r, echo = FALSE}
 # plot vacío con ejes y densidad
 plot(NA, xlim = c(-4, 4), ylim = c(0, dnorm(0)), 
@@ -339,13 +350,159 @@ abline(v = Tobs, col = "black", lwd = 2)
 # --------------------------------------------
 # 5) Agrego leyenda para aclarar
 # --------------------------------------------
-legend("topright", 
+legend("topleft", 
        legend = c("Normal Estándar", 
                   paste0("T-obs = ", round(Tobs, 3))),
        col    = c("orange", "black"),
        lty    = c(1, 1),
        lwd    = c(2, 2),
        bty    = "n")
+```
+
+Estos resultados tienen sentido: cuánto más chico es el nivel de significancia \(\alpha\) más difícil es rechazar \(H_{0}\). 
+Esto se puede apreciar en el grafico: los "Z criticos" de los niveles de significancia más chicos (0.01 y 0.02) son las lineas punteadas a la derecha del T-observado. Esto quiere decir que el valor que observamos no es "tan extremo" cómo para darnos suficiente evidencia que nos permita rechazar \(H_{0}\) en niveles de significancia 0.01 o 0.02.
+
+### (D)
+
+Ahora queremos encontrar el valor minimo de \(\alpha\) para el cuál podriamos rechazar \(H_{0}\) con los datos observados. Del inciso anterior, sabemos que éste valor minimo tiene que estar entre \(\alpha=0.02\) y \(\alpha=0.03\). Vamos a armar un for-loop que vaya probando todos los numeros decimales entre 0.02 y 0.03 con 3 digitos decimales y mostrar los resultados en una tabla:
+
+```{r, echo = FALSE}
+
+alfas2 = seq(0.02,0.03,by=0.001)
+
+z_crit2  <- numeric(length(alfas2))   # un vector numérico vacío de la misma longitud que 'alfas'
+decision2 <- character(length(alfas2)) # un vector de texto (caracteres) vacío
+
+for(i in 1:length(alfas2)){
+  
+  z_crit2[i] <- qnorm(1-alfas2[i])
+  
+  if(Tobs >= z_crit2[i]){
+    decision2[i] <- "Rechazo H0"
+  } else {
+    decision2[i] <- "No Rechazo H0"
+  }
+}
+
+# Armo un data.frame con las tres columnas
+tabla <- data.frame(
+  alpha    = alfas2,
+  z_crit   = round(z_crit2, 3),  # redondeo a 3 decimales para que quede prolijo
+  decision = decision2
+)
+
+print(tabla)
+
+
+```
+
+
+Vemos que el valor minimo de \(\alpha\) para el cuál podemos rechazar \(H_{0}\) es **0.025**. Esto tiene sentido sí vemos que el "Z Critico" para éste nivel de significancia es igual a nuestro T-observado: **1.96**. Esto no podria ser de otra forma: el nivel minimo de \(\alpha\) para el cuál puedo rechazar \(H_{0}\) tiene que ser igual al T-observado ya que sí es más grande no podriamos rechazar \(H_{0}\), y sí fuera más chico no seria el valor minimo.
+
+0.025 sera lo que mida el área a la derecha del T-observado (area sombreada en el grafico):
+
+```{r, echo = FALSE}
+# ——————————————————————————————————————————
+# 1) Defino valores esenciales
+# ——————————————————————————————————————————
+
+# Valor crítico z (por ej. 1.96)
+z_crit3 <- 1.96
+
+# Supongamos que Tobs coincide con z_crit (si no, pon tu valor real)
+Tobs <- 1.96
+
+# Calculo la densidad en esos puntos, para cortar la línea justo en la curva
+y_z   <- dnorm(z_crit3)
+y_obs <- dnorm(Tobs)
+
+# ——————————————————————————————————————————
+# 2) Creo el plot vacío y dibujo la curva Normal Estándar
+# ——————————————————————————————————————————
+plot(
+  NA,
+  xlim  = c(-4, 4),
+  ylim  = c(0, dnorm(0)),
+  xlab  = "Valor de Z",
+  ylab  = "Densidad",
+  main  = "Normal Estándar con Cortes y T_obs"
+)
+
+# Agrego la curva de la Normal estándar
+curve(dnorm(x), from = -4, to = 4, add = TRUE, col = "orange", lwd = 2)
+
+# ——————————————————————————————————————————
+# 3) Sombreo el área a la derecha de z_crit (cola derecha)
+# ——————————————————————————————————————————
+
+# 3.1) Genero secuencia desde z_crit hasta el tope superior (4)
+xs <- seq(z_crit3, 4, length.out = 200)
+ys <- dnorm(xs)
+
+# 3.2) Dibujo el polígono que cubre esa región
+polygon(
+  x   = c(z_crit3, xs, 4),
+  y   = c(0, ys, 0),
+  col = "lightgray",
+  border = NA
+)
+
+# ——————————————————————————————————————————
+# 4) Dibujo las líneas verticales cortadas en la curva
+# ——————————————————————————————————————————
+
+# Si z_crit == Tobs y querés dejar claro que ambas coinciden,
+# desplazamos un poquito cada línea en x (0.015 a cada lado), para que se noten las dos.
+# Si Tobs fuera distinto a z_crit, podés quitar el desplazamiento y usar los valores exactos.
+
+# 4.1) Línea roja punteada (valor crítico), pero le resto 0.015 para que no se superponga al negro
+segments(
+  x0 = z_crit3 - 0.015, y0 = 0,
+  x1 = z_crit3 - 0.015, y1 = y_z,
+  col = "red",
+  lty = 2,
+  lwd = 2
+)
+
+# 4.2) Línea negra gruesa (T_obs), le sumo 0.015 para que se vea al lado
+segments(
+  x0 = Tobs + 0.015, y0 = 0,
+  x1 = Tobs + 0.015, y1 = y_obs,
+  col = "black",
+  lwd = 2
+)
+
+# ——————————————————————————————————————————
+# 5) Leyenda para aclarar qué representa cada cosa
+# ——————————————————————————————————————————
+legend(
+  "topleft",
+  legend = c(
+    "Normal Estándar",
+    paste0("Zona crítica (z = ", z_crit3, ")"),
+    paste0("T_obs = ", round(Tobs, 3))
+  ),
+  col  = c("orange", "red", "black"),
+  lty  = c(1, 2, 1),
+  lwd  = c(2, 2, 2),
+  bty  = "n"
+)
+```
+
+Es muy importante notar que el área sombreada es el p-valor. Esto tiene sentido sí recordamos que el p-valor es la "probabilidad de observar valores iguales o más extremos a lo observado". Graficamente, el p-valor es el área a derecha del T-obs (en éste caso dónde \(H_{1}: \mu > \mu_{0}\)), en otros casos podria ser el área a la izquierda, o el área en ambos extremos).
+
+Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor es el nivel de significancia \(\alpha\) minimo, para el cuál puedo rechazar \(H_{0}\) con los datos observados".
+
+## Ejercicio 5
+
+### (A)
+
+```{r, echo = FALSE}
+
+sd = sd(datos_historicos)
+
+muestra_sim = rnorm(200, mean = media_muestral, sd = sd)
+
 ```
 
 
