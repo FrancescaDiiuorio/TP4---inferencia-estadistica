@@ -13,7 +13,7 @@ datos_nueva_version = read.csv("datos_nueva_version.csv")$play.delay
 ```
 
 ## Ejercicio 1
-### (a)
+### (A)
 
 ```{r, echo = FALSE}
 media_muestral <- round(mean(datos_historicos),2)
@@ -25,11 +25,11 @@ La **media muestral** de los datos historicos es **`r media_muestral`**.
 
 La **varianza muestral** de los datos historicos es **`r var_muestral`**.
 
-### (b)
+### (B)
 
 ``` {r, echo = FALSE}
-hist(datos_historicos, prob = TRUE, breaks=30 ,col = "lightblue", main = "Histograma de densidad de datos historicos")
-curve(dnorm(x, mean = media_muestral, sd = sqrt(var_muestral)), lwd = 2, lty = 2, add = TRUE, col = "darkred")
+hist(datos_historicos, prob = TRUE, breaks=30 ,col = "sandybrown", main = "Histograma de densidad de datos historicos")
+curve(dnorm(x, mean = media_muestral, sd = sqrt(var_muestral)), lwd = 2, lty = 2, add = TRUE, col = "black")
 
 ```
 
@@ -78,7 +78,7 @@ $$ \hat{\mu} = \overline{X} = 42.99 \\$$
 
 ## Ejercicio 3
 
-### (a) 
+### (A) 
 
 
 
@@ -121,7 +121,7 @@ $$T=\frac{\overline{X}-41.98}{\sqrt{52.43 / 200}} \sim \mathcal{N}(0, 1) \quad \
 
 T es nuestro estadístico. Nos sirve porque es una función de la muestra aleatoria y tiene distribución conocida bajo \(H_0\). 
 
-### (b)
+### (B)
 
 $$ \alpha = 0.05 \\$$
 
@@ -171,7 +171,7 @@ x <- seq(-4, 4, length = 1000)
 y <- dnorm(x, mean = media, sd = desvio)
 
 # Graficamos la curva normal
-plot(x, y, type = "l", lwd = 2, col = "blue",
+plot(x, y, type = "l", lwd = 2, col = "orange",
      xlab = "N(0,1)", ylab = "", 
      main = paste("Área =", alpha, "a derecha de q"))
 
@@ -181,11 +181,11 @@ y_somb <- dnorm(x_somb, mean = media, sd = desvio)
 
 polygon(c(x_somb, rev(x_somb)), 
         c(y_somb, rep(0, length(y_somb))), 
-        col = rgb(1, 0, 0, 0.3), border = NA)
+        col = rgb(1, .5, 0, 0.3), border = NA)
 
 # Línea vertical en q
-abline(v = q, col = "red", lwd = 2, lty = 2)
-text(q, dnorm(q), labels = sprintf("q"), pos = 4, col = "red")
+abline(v = q, col = "orange4", lwd = 2, lty = 2)
+text(q, dnorm(q), labels = sprintf("q"), pos = 4, col = "orange4")
 
 ```
 
@@ -219,7 +219,7 @@ $$ R = \{ T > 1.64\} \\$$
 
 ## Ejercicio 4
 
-### (a)
+### (A)
 
 
 Para utilizar el test construido, el primer paso es calcular el promedio de los valores de la muestra "datos nueva versión". Una vez calculado, evaluamos nuestro estadístico observado. Si este pertenece en la Región de Rechazo, rechazamos \(H_0\). En el caso de no pertenecer a la región, no confirmamos que \(H_0\) sea verdadera sino que no tenemos la suficiente evidencia para rechazarla.  
@@ -229,7 +229,7 @@ Como vimos antes:
 $$ \hat{\mu} = \overline{X} =  42.99 \\$$
 Ahora, buscamos al estadístico observado de esta muestra. 
 
-$$  T_{obs} = \frac{\overline{X_{obs}}-41.98}{\sqrt{52.43 / 200}} \\$$
+$$  T_{obs} = \frac{\overline{X}_{obs}-41.98}{\sqrt{52.43 / 200}} \\$$
 
 $$  T_{obs} = \frac{42.99-41.98}{\sqrt{52.43 / 200}} = 1.97\\$$
 
@@ -246,7 +246,7 @@ Como podemos ver, el estadístico observado pertenece a la región de rechazo. T
 Con esta evidencia rechazamos la actualización ya que aumenta el "play-delay", es decir, la esperanza del "play-delay" con la versión nueva es mayor a la actual, y es por eso que enviamos el código a revisión. 
 
 
-### (b)
+### (B)
 
 ```{r, echo = FALSE}
 
@@ -286,17 +286,17 @@ El \(\alpha\) desplaza el punto de corte para la Región de Rechazo. A mayor \(\
 
 ### (C)
 
-Para cada alfa, calculamos el Z critico: el punto que marca el comienzo de la región de rechazo.
+Para cada \(\alpha\), calculamos el \(Z_{\alpha}\): el punto que marca el comienzo de la región de rechazo.
 
-$$ R=\{T>Z_{\text{crit}}\} $$
-Si el **T observado (1.97)** es mayor al Z critico para un alfa dado, entonces tendremos evidencia suficiente a nivel alfa para rechazar \(H_{0}\).
+$$ R=\{T>Z_{\alpha}\} $$
+Si el **T observado (1.97)** es mayor al \(Z_{\alpha}\) para un \(\alpha\) dado, entonces tendremos evidencia suficiente a nivel \(\alpha\) para rechazar \(H_{0}\).
 
 
 ```{r, echo= FALSE}
 
 alfas <- seq(0.01, 0.10, by = 0.01)
 
-z_crit  <- numeric(length(alfas))   # un vector numérico vacío de la misma longitud que 'alfas'
+z_crit  <- numeric(length(alfas))   # un vector numérico vacío (de ceros) de la misma longitud que 'alfas'
 decision <- character(length(alfas)) # un vector de texto (caracteres) vacío
 
 for(i in 1:length(alfas)){
@@ -313,7 +313,7 @@ for(i in 1:length(alfas)){
 # Armo un data.frame con las tres columnas
 tabla <- data.frame(
   alpha    = alfas,
-  z_crit   = round(z_crit, 3),  # redondeo a 3 decimales para que quede prolijo
+  z_alpha   = round(z_crit, 3),  # redondeo a 3 decimales para que quede prolijo
   decision = decision
 )
 
@@ -321,7 +321,7 @@ print(tabla)
 
 ```
 
-Se puede ver que para un **\(\alpha\) igual o mayor a 0.3** ya puedo rechazar \(H_{0}\).
+Se puede ver que para un **\(\alpha\) igual o mayor a 0.03** ya puedo rechazar \(H_{0}\).
 Es útil ver estos resultados de forma grafica:
 
 
@@ -360,7 +360,7 @@ legend("topleft",
 ```
 
 Estos resultados tienen sentido: cuánto más chico es el nivel de significancia \(\alpha\) más difícil es rechazar \(H_{0}\). 
-Esto se puede apreciar en el grafico: los "Z criticos" de los niveles de significancia más chicos (0.01 y 0.02) son las lineas punteadas a la derecha del T-observado. Esto quiere decir que el valor que observamos no es "tan extremo" cómo para darnos suficiente evidencia que nos permita rechazar \(H_{0}\) en niveles de significancia 0.01 o 0.02.
+Esto se puede apreciar en el gráfico: los "Z críticos" (\(Z_{\alpha}\)) de los niveles de significancia más chicos (0.01 y 0.02) son las líneas punteadas a la derecha del T-observado. Esto quiere decir que el valor que observamos no es "tan extremo" cómo para darnos suficiente evidencia que nos permita rechazar \(H_{0}\) en niveles de significancia 0.01 o 0.02.
 
 ### (D)
 
@@ -370,7 +370,7 @@ Ahora queremos encontrar el valor minimo de \(\alpha\) para el cuál podriamos r
 
 alfas2 = seq(0.02,0.03,by=0.001)
 
-z_crit2  <- numeric(length(alfas2))   # un vector numérico vacío de la misma longitud que 'alfas'
+z_crit2  <- numeric(length(alfas2))   # un vector numérico vacío (de ceros) de la misma longitud que 'alfas'
 decision2 <- character(length(alfas2)) # un vector de texto (caracteres) vacío
 
 for(i in 1:length(alfas2)){
@@ -387,7 +387,7 @@ for(i in 1:length(alfas2)){
 # Armo un data.frame con las tres columnas
 tabla <- data.frame(
   alpha    = alfas2,
-  z_crit   = round(z_crit2, 3),  # redondeo a 3 decimales para que quede prolijo
+  z_alpha   = round(z_crit2, 3),  # redondeo a 3 decimales para que quede prolijo
   decision = decision2
 )
 
@@ -397,9 +397,9 @@ print(tabla)
 ```
 
 
-Vemos que el valor minimo de \(\alpha\) para el cuál podemos rechazar \(H_{0}\) es **0.025**. Esto tiene sentido sí vemos que el "Z Critico" para éste nivel de significancia es igual a nuestro T-observado: **1.96**. Esto no podria ser de otra forma: el nivel minimo de \(\alpha\) para el cuál puedo rechazar \(H_{0}\) tiene que ser igual al T-observado ya que sí es más grande no podriamos rechazar \(H_{0}\), y sí fuera más chico no seria el valor minimo.
+Vemos que el valor minimo de \(\alpha\) para el cuál podemos rechazar \(H_{0}\) es **0.025**. Esto tiene sentido si vemos que el "Z Critico" para éste nivel de significancia (\(Z_{0.025}\)) es igual a nuestro T-observado: **1.96**. Esto no podría ser de otra forma: el nivel mínimo de \(\alpha\) para el cuál puedo rechazar \(H_{0}\) tiene que ser igual al T-observado ya que si fuese más grande no podríamos rechazar \(H_{0}\), y sí fuese más chico no sería el valor mínimo.
 
-0.025 sera lo que mida el área a la derecha del T-observado (area sombreada en el grafico):
+0.025 será lo que mida el área a la derecha del T-observado (área sombreada en el gráfico):
 
 ```{r, echo = FALSE}
 # ——————————————————————————————————————————
@@ -489,9 +489,9 @@ legend(
 )
 ```
 
-Es muy importante notar que el área sombreada es el p-valor. Esto tiene sentido sí recordamos que el p-valor es la "probabilidad de observar valores iguales o más extremos a lo observados (en direccion a \(H_{1}\)), asumiendo que \(H_{0}\) es verdadera". Graficamente, el p-valor es el área a derecha del T-obs (en éste caso dónde \(H_{1}: \mu > \mu_{0}\)), en otros casos podria ser el área a la izquierda, o el área en ambos extremos).
+Es muy importante notar que el área sombreada es el p-valor. Esto tiene sentido si recordamos que el p-valor es la "probabilidad de observar valores iguales o más extremos a lo observados (en direccion a \(H_{1}\)), asumiendo que \(H_{0}\) es verdadera". Gráficamente, el p-valor es el área a derecha del T-obs (en éste caso dónde \(H_{1}: \mu > \mu_{0}\)), en otros casos podria ser el área a la izquierda, o el área en ambos extremos).
 
-Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor es el nivel de significancia \(\alpha\) minimo, para el cuál puedo rechazar \(H_{0}\) con los datos observados".
+Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor es el nivel de significancia del \(\alpha\) mínimo, para el cual puedo rechazar \(H_{0}\) con los datos observados".
 
 ## Ejercicio 5
 
@@ -499,7 +499,7 @@ Entonces, podemos ver que existe otra manera de pensar al p-valor: "el p-valor e
 
 En este ejercicio vamos a **simular** una muestra de tamaño \(n = 200\) asumiendo que la hipótesis nula \(H_{0}: \mu = \mu_{0}\) es verdadera, es decir, que la nueva versión **no** modificó la media de Play‐Delay con respecto a los datos históricos. 
 
-Los datos de nuestra muestra tendran la siguiente distribucion:
+Los datos de nuestra muestra tendrán la siguiente distribución:
 
 $$ X_{1},...,X_{200} \sim N(41.98, 52.48)$$
 Simulamos la muestra en R:
@@ -529,7 +529,7 @@ $$R=\{T>1.64\}$$
 
 Entonces, cómo el T-observado **(-0.81)** es menor que 1.64, **NO tenemos evidencia suficiente para rechazar \(H_{0}\)** con los datos observados.
 
-Esta es la decisión correcta ya que estamos asumiendo que \(H_{0}\) es verdadera. Si, por casualidad, el T-Observado hubiera sido mayor que 1.64, habriamos cometido un **Error de Tipo 1** al rechazar \(H_{0}\).
+Esta es la decisión correcta ya que estamos asumiendo que \(H_{0}\) es verdadera. Si, por casualidad, el T-Observado hubiera sido mayor que 1.64, habríamos cometido un **Error de Tipo 1** al rechazar \(H_{0}\).
 
 
 ### (B)
@@ -665,6 +665,47 @@ $$\text{p-valor} = 0.25$$
 Vemos que el p-valor que calculamos es el mismo que habiamos obtenido en el punto 4.d. Como explicamos en ése punto, esto se debe a que el p-valor es el minimo nivel de significancia \(\alpha\) para el que rechazamos \(H_{0}\) con los datos observados.
 
 
+### Ejercicio 7
+
+### (A)
+
+\(H_0\): "Los datos provienen de una distribución normal".
+
+\(H_1\): "Los datos *no* provienen de una distribución normal".
+
+$$
+\begin{array}{c}
+H_0 : X_i \sim \mathcal{N}(\mu, \sigma^2)\quad \forall\space i \space : \space 1 \leq i \leq 200 \\
+vs. \\
+H_1: X_i \nsim \mathcal{N}(\mu, \sigma^2) \quad \text{para al menos un } i
+\end{array}
+$$  
+
+### (B)
+
+```{r}
+print(shapiro.test(datos_historicos))
 
 
+print(shapiro.test(datos_nueva_version))
+
+```
+
+$$\\$$
+Como no se especifica el valor de \(\alpha\) para estos test, se asume que \(\alpha\) = 0.05.
+
+
+* Si el p-valor \(< 0.05 \implies\) Rechazo \(H_0\) \(\implies\) los datos no son normales.
+
+* Si el p-valor \(\geq 0.05 \implies\) No rechazo \(H_0\) \(\implies\) los datos son compatibles con una normal.
+
+
+El p-valor en los datos históricos es 0.6934.<
+
+
+El p-valor en los datos de la nueva versión es 0.867.
+
+
+
+En ambos casos el p-valor \(\geq \alpha = 0.05\). Por lo tanto no rechazo \(H_0\) ni para los datos históricos ni para los datos de la nueva versión. Ambos datos son compatibles con una normal. 
 
