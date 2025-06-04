@@ -401,7 +401,7 @@ print(tabla)
 ```
 
 
-Vemos que el valor minimo de \(\alpha\) para el cuál podemos rechazar \(H_{0}\) es **0.025**. Esto tiene sentido si vemos que el "Z Critico" para éste nivel de significancia (\(Z_{0.025}\)) es igual a nuestro T-observado: **1.96**. Esto no podría ser de otra forma: el nivel mínimo de \(\alpha\) para el cuál puedo rechazar \(H_{0}\) tiene que ser igual al T-observado ya que si fuese más grande no podríamos rechazar \(H_{0}\), y sí fuese más chico no sería el valor mínimo.
+Vemos que el valor minimo de \(\alpha\) para el cuál podemos rechazar \(H_{0}\) es **0.025**. Esto tiene sentido si vemos que el "Z alpha" para éste nivel de significancia (\(Z_{0.025}\)) es igual a nuestro T-observado: **1.96**. Esto no podría ser de otra forma: el nivel mínimo de \(\alpha\) para el cuál puedo rechazar \(H_{0}\) tiene que ser igual al T-observado ya que si fuese más grande no podríamos rechazar \(H_{0}\), y sí fuese más chico no sería el valor mínimo.
 
 0.025 será lo que mida el área a la derecha del T-observado (área sombreada en el gráfico):
 
@@ -668,8 +668,14 @@ $$\text{p-valor} = 0.25$$
 
 Vemos que el p-valor que calculamos es el mismo que habiamos obtenido en el punto 4.d. Como explicamos en ése punto, esto se debe a que el p-valor es el minimo nivel de significancia \(\alpha\) para el que rechazamos \(H_{0}\) con los datos observados.
 
+Por lo tanto, con conocer el p-valor de un test nos alcanza para tomar la decision del test:
 
-### Ejercicio 7
+* Si \(\text{p-valor}\leq \alpha\): rechazo \(H_{0}\)
+ 
+* Si \(\text{p-valor}>\alpha\): NO rechazo \(H_{0}\)
+
+
+## Ejercicio 7
 
 ### (A)
 
@@ -711,5 +717,5 @@ El p-valor en los datos de la nueva versión es 0.867.
 
 
 
-En ambos casos el p-valor \(\geq \alpha = 0.05\). Por lo tanto no rechazo \(H_0\) ni para los datos históricos ni para los datos de la nueva versión. Ambos datos son compatibles con una normal. 
+En ambos casos el p-valor \(\geq \alpha = 0.05\). Por lo tanto no rechazo \(H_0\) ni para los datos históricos ni para los datos de la nueva versión. No tenemos evidencia para sostener que los datos NO provienen de una Normal.
 
