@@ -72,9 +72,12 @@ mu_estimado = round(mean(datos_nueva_version),2)
 
 Para estimar \(\mu\) vamos calcular la **media muestral** de la muestra con los 200 nuevos usuarios.
 
-La estimación de \(\mu\) es:  
+El estimador de \(\mu\) es:  
 
-$$ \hat{\mu} = \overline{X} = 42.99 \\$$
+$$ \hat{\mu} = \overline{X} \\$$
+Según la muestra que tenemos, la estimación de \(\mu\) es:
+
+$$ \hat{\mu}_{obs} = \overline{X}_{obs} =  42.99 $$
 
 ## Ejercicio 3
 
@@ -226,7 +229,8 @@ Para utilizar el test construido, el primer paso es calcular el promedio de los 
 
 Como vimos antes:
 
-$$ \hat{\mu} = \overline{X} =  42.99 \\$$
+$$ \overline{X}_{obs} =  42.99 $$
+
 Ahora, buscamos al estadístico observado de esta muestra. 
 
 $$  T_{obs} = \frac{\overline{X}_{obs}-41.98}{\sqrt{52.43 / 200}} \\$$
@@ -522,7 +526,7 @@ print(Tobs_sim)
 ```
 
 
-$$ T = \frac{41.56-41.98}{\sqrt{52.43/200}}=-0.81$$
+$$ T_{obs} = \frac{41.56-41.98}{\sqrt{52.43/200}}=-0.81$$
 
 En el punto 3.b vimos que la región de rechazo para éste test con un nivel \(\alpha = 0.05\) es:
 $$R=\{T>1.64\}$$
@@ -580,7 +584,7 @@ Al construir un test de hipótesis, uno de los pasos fundamentales es establecer
 
 En nuestro caso particular, estamos asumiendo que \(H_0\) es verdadera: es decir, la nueva versión de la plataforma no modificó el valor promedio del Play‐Delay. Por lo tanto, si el test rechaza \(H_0\) bajo esta suposición, estaríamos cometiendo un Error de Tipo 1.
 
-El test que usamos fue diseñado con un nivel de significancia \(\alpha\) = 0.05, lo cual significa que, en promedio, esperamos que el 5% de los tests conduzcan a un rechazo incorrecto de \(H_0\) cuando esta es cierta (que es lo que observamos en el punto anterior).
+El test que usamos fue diseñado con un nivel de significancia \(\alpha\) = 0.05, que significa que esperamos que aproximadamente el 5% de los tests conduzcan a un rechazo incorrecto de \(H_0\) cuando esta es verdadera (que es lo que observamos en el punto anterior).
 
 
 ## Ejercicio 6
@@ -700,7 +704,7 @@ Como no se especifica el valor de \(\alpha\) para estos test, se asume que \(\al
 * Si el p-valor \(\geq 0.05 \implies\) No rechazo \(H_0\) \(\implies\) los datos son compatibles con una normal.
 
 
-El p-valor en los datos históricos es 0.6934.<
+El p-valor en los datos históricos es 0.6934.
 
 
 El p-valor en los datos de la nueva versión es 0.867.
