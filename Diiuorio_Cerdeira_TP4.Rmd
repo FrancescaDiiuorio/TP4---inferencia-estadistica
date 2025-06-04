@@ -98,7 +98,7 @@ $$ H_0: \mu \leq 41.98 \quad\text{vs}.\quad  H_1: \mu > 41.98 \\$$
 Para simplificar el problema, suponemos:
 $$ H_0: \mu = 41.98  \\$$
 
-Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.9847. Por lo tanto, si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
+Esto se puede hacer ya que el caso límite de \(H_0\) es cuando \(\mu\) = 41.98. Por lo tanto, si puedo rechazar esa \(H_0\) entonces puedo rechazar también todos los valores de 
 
 $$ \mu \leq 41.98 \\$$
 
